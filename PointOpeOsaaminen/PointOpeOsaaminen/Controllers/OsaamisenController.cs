@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PointOpeOsaaminen.Models;
+using PointOpeOsaaminen.ViewModel;
 
 namespace PointOpeOsaaminen.Controllers
 {
@@ -127,6 +128,38 @@ namespace PointOpeOsaaminen.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult OsaamisListaus()
+        {
+            List<OpettajaOsaaminen> model = new List<OpettajaOsaaminen>();
+            OpettajakantaEntities entities = new OpettajakantaEntities();
+            try
+            {
+                List<Osaamiset> osaamiset = entities.Osaamiset.ToList();
+                foreach (Osaamiset osaaminen in osaamiset)
+                {
+                    OpettajaOsaaminen view = new OpettajaOsaaminen();
+                    view.OsaamisID = osaaminen.OsaamisID;
+                    view.Osaaminen = osaaminen.Osaaminen;
+                    view.OpettamisenHalukkuus = osaaminen.OpettamisenHalukkuus;
+                    view.Kuvaus = osaaminen.Kuvaus;
+                    view.OpettajaID = osaaminen.Opettaja.OpettajaID;
+                    view.Etunimi = osaaminen.Opettaja.Etunimi;
+                    view.Sukunimi = osaaminen.Opettaja.Sukunimi;
+                    view.Sähköposti = osaaminen.Opettaja.Sähköposti;
+                    view.Henkilönumero = osaaminen.Opettaja.Henkilönumero;
+                    view.Yksikkö = osaaminen.Opettaja.Yksikkö;
+                    view.Toimenkuva = osaaminen.Opettaja.Toimenkuva;
+                    view.Nimi = osaaminen.Opettaja.Etunimi + " " + osaaminen.Opettaja.Sukunimi;
+                    model.Add(view);
+                }
+            }
+            finally
+            {
+                entities.Dispose();
+            }
+            return View(model);
         }
     }
 }
