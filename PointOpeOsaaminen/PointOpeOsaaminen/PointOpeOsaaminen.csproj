@@ -209,6 +209,7 @@
     <Content Include="Models\OpettajaModel.edmx.diagram">
       <DependentUpon>OpettajaModel.edmx</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
